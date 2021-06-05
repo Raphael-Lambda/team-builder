@@ -30,10 +30,46 @@ const MemberDivM = styled.div`
     }
 `
 
-export default function Member({member , deleteMember}){
-    const { age, name, position, id} = member
-   
+const H2Input = styled.input`
+    text-align: center;
+`
 
+export default function Member({member , deleteMember, editMember, memberToEdit, memberToEditModif, saveModif}){
+    const { age, name, position, id} = member
+
+    function editChange(e){
+        e.preventDefault();
+        saveModif();
+    }
+
+   if(id === memberToEdit.id){
+    return(
+        <MemberDivM position={position}>
+            <H2Input type="text" value={memberToEdit.name} onChange={memberToEditModif} name="name"/>
+            <DetailsDiv >
+                <label>
+                    position
+                    <select value={memberToEdit.position} onChange={memberToEditModif} name="position">
+                        <option value="Safety">Safety</option>
+                        <option value="CornerBack">CornerBack</option>
+                        <option value="End">End</option>
+                        <option value="Tackle">Tackle</option>
+                        <option value="Outside LineBacker">Outside LineBacker</option>
+                        <option value="Middle LineBacker">Middle LineBacker</option>
+                    </select>
+                </label>
+                <label>
+                    age
+                    <input type="number" value={memberToEdit.age} onChange={memberToEditModif} name="age" />
+                </label>
+                <p>id: {id}</p>
+            </DetailsDiv>
+            <button onClick={() => deleteMember(id)}>Delete</button>
+            <input type="submit" onClick={(e) => editChange(e)} />
+        </MemberDivM>
+    ) 
+   }
+   else{
     return(
         <MemberDivM position={position}>
             <h2>{name}</h2>
@@ -43,6 +79,8 @@ export default function Member({member , deleteMember}){
                 <p>id: {id}</p>
             </DetailsDiv>
             <button onClick={() => deleteMember(id)}>Delete</button>
+            <button onClick={() => editMember(id)}>Edit</button>
         </MemberDivM>
     )
+   }
 }

@@ -25,6 +25,7 @@ function App() {
 
   const [team1, setTeam] = useState([])
   const [member, setMember] = useState(defaultMember)
+  const [memberToEdit, setMemberToEdit] = useState(defaultMember)
 
   function onchange (e){
     setMember({
@@ -32,16 +33,11 @@ function App() {
       [e.target.name]: e.target.value,
       id: team1.length > 0 ?team1[team1.length - 1].id + 1: 1,
     })
-
   }
 
   function submitData(){
     if(!member.age || !member.name || !member.position) return
-    console.log(member)
-    console.log(team1)
     const newTeam = [...team1, member]
-    console.log(newTeam)
-
     setMember(defaultMember)
     setTeam(newTeam)
   }
@@ -51,13 +47,34 @@ function App() {
     setTeam(newTeam)
   }
 
+  function editMember(memberId){
+    const toEdit = team1.filter(member => member.id === memberId)
+    console.log(`toEdit is ${toEdit[0]}`)
+    setMemberToEdit(toEdit)
+  }
+
+  function memberToEditModif(e){
+    setMemberToEdit({
+      ...memberToEdit,
+      [e.target.name]: e.target.value,
+    })
+
+  }
+
+  function saveModif(){
+    const oldTeam = team1.filter(member => member.id !== memberToEdit.id)
+    const newTeam = [...oldTeam, memberToEdit]
+    setMemberToEdit(defaultMember)
+    setTeam(newTeam)
+  }
+
   return (
     <>
     <HeaderDiv>
       <h1>Team Builder Form</h1>
         <Form member={member} submitData={submitData} onchange={onchange}/>
     </HeaderDiv>
-    <Team team1={team1} deleteMember={deleteMember}/>
+    <Team team1={team1} deleteMember={deleteMember} editMember={editMember} memberToEdit={memberToEdit} memberToEditModif={memberToEditModif} saveModif={saveModif}/>
   </>
     
   );
