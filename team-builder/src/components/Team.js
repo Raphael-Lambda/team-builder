@@ -9,13 +9,12 @@ const TeamDiv = styled.div`
     justify-content: space-evenly;
 `
 
-export default function Team({team1, deleteMember, editMember,memberToEdit, memberToEditModif, saveModif}){
-
+export default function Team({team1, deleteMember, editMember, memberToEdit, memberToEditModif, saveModif}){
     return(
         <TeamDiv>
         {team1.map((member) => {
             return(
-                <Member member={member} deleteMember={deleteMember} editMember={editMember} memberToEdit={memberToEdit} memberToEditModif={memberToEditModif} saveModif={saveModif}/>
+                <Member key={member.id} member={member} deleteMember={deleteMember} editMember={editMember} memberToEdit={memberToEdit} memberToEditModif={memberToEditModif} saveModif={saveModif}/>
             )
         })}
         </TeamDiv>
