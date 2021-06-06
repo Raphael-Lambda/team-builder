@@ -55,7 +55,7 @@ export default function Form({member, onchange, submitData}){
                 <LabelDiv>
                     Position
                     <LabelSelect onChange={onchange} name="position" value={position}>
-                        <option disabled>Position</option>
+                        <option value="position" disabled >Position</option>
                         <option value="Safety">Safety</option>
                         <option value="CornerBack">CornerBack</option>
                         <option value="End">End</option>

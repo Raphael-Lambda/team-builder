@@ -13,13 +13,12 @@ const HeaderDiv = styled.div`
   }
 `
 
-
 function App() {
 
   const defaultMember = {
     name: '',
     age: '',
-    position: '',
+    position: 'position',
     id: 0,
   }
 
@@ -36,7 +35,7 @@ function App() {
   }
 
   function submitData(){
-    if(!member.age || !member.name || !member.position) return
+    if(!member.age || !member.name || member.position === 'position') return
     const newTeam = [...team1, member]
     setMember(defaultMember)
     setTeam(newTeam)
@@ -49,9 +48,9 @@ function App() {
 
   function editMember(memberId){
     const toEdit = team1.filter(member => member.id === memberId)
-    console.log(`toEdit is ${toEdit[0]}`)
-    setMemberToEdit(toEdit)
+    setMemberToEdit(toEdit[0])
   }
+
 
   function memberToEditModif(e){
     setMemberToEdit({
@@ -66,7 +65,7 @@ function App() {
     const newTeam = [...oldTeam, memberToEdit]
     setMemberToEdit(defaultMember)
     setTeam(newTeam)
-  }
+  }    
 
   return (
     <>
@@ -74,7 +73,7 @@ function App() {
       <h1>Team Builder Form</h1>
         <Form member={member} submitData={submitData} onchange={onchange}/>
     </HeaderDiv>
-    <Team team1={team1} deleteMember={deleteMember} editMember={editMember} memberToEdit={memberToEdit} memberToEditModif={memberToEditModif} saveModif={saveModif}/>
+    {team1.length > 0 && <Team team1={team1} deleteMember={deleteMember} editMember={editMember} memberToEdit={memberToEdit} memberToEditModif={memberToEditModif} saveModif={saveModif}/>}
   </>
     
   );
